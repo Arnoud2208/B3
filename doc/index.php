@@ -1,36 +1,45 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 <html lang="nl">
 
 <head>
     <title>Inloggen</title>
-
     <link rel="stylesheet" href="../public_html/css/style.css">
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <form class="login-form" action="login.php" method="POST">
+        <form class="login-form" action="login.php" method="POST">
 
-        <h2>Inloggen</h2>
+            <h2>Inloggen</h2>
 
-        <div class="form-group">
-            <label for="username">Gebruikersnaam</label>
-            <input type="text" name="username" id="username" required>
-        </div>
+            <?php
+            if(isset($_SESSION['error'])){
+                echo "<p class='error'>" . $_SESSION['error'] . "</p>";
+                unset($_SESSION['error']);
+            }
+            ?>
 
-        <div class="form-group">
-            <label for="password">Wachtwoord</label>
-            <input type="password" name="password" id="password" required>
-        </div>
+            <div class="form-group">
+                <label>Gebruikersnaam</label>
+                <input type="text" name="username" required>
+            </div>
 
-        <button type="submit">Inloggen</button>
+            <div class="form-group">
+                <label>Wachtwoord</label>
+                <input type="password" name="password" required>
+            </div>
 
-    </form>
+            <button type="submit">Inloggen</button>
 
-</div>
+        </form>
+
+    </div>
 
 </body>
-
 </html>

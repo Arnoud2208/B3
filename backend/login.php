@@ -1,12 +1,42 @@
 <?php
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+session_start();
+require_once "database.php";
 
-if($username == "admin" && $password == "1234"){
-    echo "Succesvol ingelogd!";
-} else {
-    echo "Gebruikersnaam of wachtwoord is fout.";
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->execute([$username]);
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($user){
+
+        if(password_verify($password, $user['password'])){
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['naam'] = $user['naam'];
+
+            header("Location: dashboard.php");
+            exit;
+
+        } else {
+
+            $_SESSION['error'] = "Wachtwoord is incorrect.";
+            header("Location: index.php");
+            exit;
+
+        }
+
+    } else {
+
+        $_SESSION['error'] = "Gebruiker bestaat niet.";
+        header("Location: index.php");
+        exit;
+
+    }
+
 }
-
-?>
