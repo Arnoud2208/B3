@@ -4,11 +4,11 @@
 <head>
     <title>Inloggen</title>
 
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="../public_html/css/style.css">
 </head>
 
 <body>
-    
+
 <div class="container">
 
     <form class="login-form" action="login.php" method="POST">
