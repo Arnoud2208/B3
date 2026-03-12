@@ -14,15 +14,15 @@ session_start();
 
     <div class="container">
 
-        <form class="login-form" action="login.php" method="POST">
+        <form class="login-form" action="../backend/login.php" method="POST">
 
             <h2>Inloggen</h2>
 
             <?php
-            if(isset($_SESSION['error'])){
-                echo "<p class='error'>" . $_SESSION['error'] . "</p>";
-                unset($_SESSION['error']);
-            }
+                if(isset($_SESSION['error'])){
+                    echo "<p class='error'>" . $_SESSION['error'] . "</p>";
+                    unset($_SESSION['error']);
+                }
             ?>
 
             <div class="form-group">

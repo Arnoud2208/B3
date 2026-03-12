@@ -26,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         } else {
 
             $_SESSION['error'] = "Wachtwoord is incorrect.";
-            header("Location: index.php");
+            header("Location: ../doc/index.php");
             exit;
 
         }
@@ -34,7 +34,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
 
         $_SESSION['error'] = "Gebruiker bestaat niet.";
-        header("Location: index.php");
+        header("Location: ../doc/index.php");
         exit;
 
     }
