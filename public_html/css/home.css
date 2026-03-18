@@ -1,55 +1,78 @@
+/* Algemene layout */
+body {
+    background: #f4f4f4;
+    color: #1a1a1a;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    font-family: Arial, sans-serif;
+}
 
-.wrapper{
+/* Wrapper */
+.wrapper {
     width: 70%;
     margin: 0 auto;
 }
+
+/* Header */
 header {
-  display: flex;
-  justify-content: center; 
-  align-items: center;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo img {
-  max-width: 650px;
+    max-width: 650px;
 }
 
-body{
-background: #f4f4f4;
-color: black;
-min-height: 100vh;
-display: grid;
-grid-template-rows: auto 1fr;
-}
-
-button{
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    transition: 0.3s;
-    opacity: 0.5s;
-}
-
-button:is(:active, :hover){
-    opacity: 1;
-}
-
-.columns{
+/* Kolommen */
+.columns {
     display: flex;
     gap: 1.5rem;
 }
 
-.column{
+.column {
     flex: 1;
     display: grid;
-    grid-template-rows: var(--task-size) 1fr;
-    gap:0.5rem;
+    grid-template-rows: auto 1fr;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 2px solid #b6e2c8; /* lichtgroen */
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
 
-}
-.column-title{
+/* Kolomtitel */
+.column-title {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid grey;
+    border-bottom: 2px solid #b6e2c8;
+    padding-bottom: 5px;
 }
+
+.column-title h3 {
+    margin: 0;
+    color: #2a7f62; /* donkergroen */
+}
+
+/* Knoppen */
+button {
+    cursor: pointer;
+    border: none;
+    background: #4da3ff; /* blauw */
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1e7fe6;
+}
+
+/* Taken */
 .tasks {
     display: flex;
     flex-direction: column;
@@ -58,7 +81,52 @@ button:is(:active, :hover){
 
 .task {
     background: white;
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
-    color: black;
+    border-left: 4px solid #4da3ff; /* blauwe accentlijn */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+}
+
+.popup-content {
+    background: white;
+    padding: 25px;
+    width: 350px;
+    margin: 120px auto;
+    border-radius: 12px;
+    border: 2px solid #b6e2c8;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    color: #2a7f62;
+}
+
+/* Form elementen */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #b6e2c8;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #4da3ff;
 }
