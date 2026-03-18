@@ -138,6 +138,7 @@ require_once '../backend/conn.php';
 
                 // Titel van de taak
                 echo htmlspecialchars($row['titel']);
+                echo htmlspecialchars($row['afdeling']);
 
                 // Verwijderknop
                 echo "
@@ -177,6 +178,7 @@ require_once '../backend/conn.php';
         <option value="Inkoop ">Inkoop</option>
         <option value="Klantenservice">Klantenservice</option>
       </select>
+
 
 
       <select name="status">
