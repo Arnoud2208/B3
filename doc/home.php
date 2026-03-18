@@ -10,36 +10,36 @@ require_once '../backend/conn.php';
   <link rel="stylesheet" href="../public_html/css/home.css" type="text/css">
 
   <style>
-  .popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-  }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
 
-  .popup-content {
-    background: white;
-    padding: 20px;
-    width: 300px;
-    margin: 100px auto;
-    border-radius: 10px;
-  }
+    .popup-content {
+      background: white;
+      padding: 20px;
+      width: 300px;
+      margin: 100px auto;
+      border-radius: 10px;
+    }
 
-  .tasks {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+    .tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-  .task {
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    color: black;
-  }
+    .task {
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      color: black;
+    }
   </style>
 </head>
 
@@ -64,14 +64,30 @@ require_once '../backend/conn.php';
 
         <div class="tasks">
           <?php
-          $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo "<div class='task'>" . $row['titel'] . "</div>";
-          }
+            $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                echo "<div class='task'>";
+
+                // Titel van de taak
+                echo htmlspecialchars($row['titel']);
+
+                // Verwijderknop
+                echo "
+                    <form method='POST' action='../backend/delete_task.php' 
+                          style='display:inline; margin-left:10px;'>
+                        <input type='hidden' name='id' value='" . $row['id'] . "'>
+                        <button type='submit' onclick=\"return confirm('Taak verwijderen?');\">
+                            Verwijderen
+                        </button>
+                    </form>
+                ";
+
+                echo "</div>";
+            }
           ?>
         </div>
       </div>
-
       <!-- DOING -->
       <div class="column">
         <div class="column-title">
@@ -81,10 +97,27 @@ require_once '../backend/conn.php';
 
         <div class="tasks">
           <?php
-          $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo "<div class='task'>" . $row['titel'] . "</div>";
-          }
+            $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                echo "<div class='task'>";
+
+                // Titel van de taak
+                echo htmlspecialchars($row['titel']);
+
+                // Verwijderknop
+                echo "
+                    <form method='POST' action='../backend/delete_task.php' 
+                          style='display:inline; margin-left:10px;'>
+                        <input type='hidden' name='id' value='" . $row['id'] . "'>
+                        <button type='submit' onclick=\"return confirm('Taak verwijderen?');\">
+                            Verwijderen
+                        </button>
+                    </form>
+                ";
+
+                echo "</div>";
+            }
           ?>
         </div>
       </div>
@@ -98,10 +131,27 @@ require_once '../backend/conn.php';
 
         <div class="tasks">
           <?php
-          $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-              echo "<div class='task'>" . $row['titel'] . "</div>";
-          }
+            $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                echo "<div class='task'>";
+
+                // Titel van de taak
+                echo htmlspecialchars($row['titel']);
+
+                // Verwijderknop
+                echo "
+                    <form method='POST' action='../backend/delete_task.php' 
+                          style='display:inline; margin-left:10px;'>
+                        <input type='hidden' name='id' value='" . $row['id'] . "'>
+                        <button type='submit' onclick=\"return confirm('Taak verwijderen?');\">
+                            Verwijderen
+                        </button>
+                    </form>
+                ";
+
+                echo "</div>";
+            }
           ?>
         </div>
       </div>

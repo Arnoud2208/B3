@@ -14,7 +14,7 @@ header {
 }
 
 body{
-background: rgb(230, 239, 243);
+background: #f4f4f4;
 color: black;
 min-height: 100vh;
 display: grid;
