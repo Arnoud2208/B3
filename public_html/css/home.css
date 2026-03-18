@@ -1,0 +1,65 @@
+
+.wrapper{
+    width: 70%;
+    margin: 0 auto;
+}
+header {
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+}
+
+.logo img {
+  max-width: 650px;
+}
+
+body{
+background: rgb(230, 239, 243);
+color: black;
+min-height: 100vh;
+display: grid;
+grid-template-rows: auto 1fr;
+}
+
+button{
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    transition: 0.3s;
+    opacity: 0.5s;
+}
+
+button:is(:active, :hover){
+    opacity: 1;
+}
+
+.columns{
+    display: flex;
+    gap: 1.5rem;
+}
+
+.column{
+    flex: 1;
+    display: grid;
+    grid-template-rows: var(--task-size) 1fr;
+    gap:0.5rem;
+
+}
+.column-title{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid grey;
+    color: ;
+}
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    color: black;
+}
