@@ -169,6 +169,15 @@ require_once '../backend/conn.php';
       <input type="text" name="titel" placeholder="Titel" required><br><br>
 
       <textarea name="beschrijving" placeholder="Beschrijving"></textarea><br><br>
+      <select name="afdeling">
+        <option value="personeel">Personeel</option>
+        <option value="horeca">Horeca</option>
+        <option value="techniek">Techniek</option>
+        <option value="Groen">Groen</option>
+        <option value="Inkoop ">Inkoop</option>
+        <option value="Klantenservice">Klantenservice</option>
+      </select>
+
 
       <select name="status">
         <option value="todo">To Do</option>
