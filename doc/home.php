@@ -43,6 +43,83 @@ require_once '../backend/conn.php';
       transition: transform 0.15s ease, background 0.2s ease;
     }
 
+    /* Mooie badges */
+    .task-label {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 20px;
+      text-transform: capitalize;
+    }
+
+    /* Personeel */
+    .task.personeel {
+        border-left: 6px solid #ff6b6b;
+        background: #ffecec;
+    }
+    .task.personeel .task-label {
+        background: #ff6b6b22;
+        color: #b30000;
+        border: 1px solid #ff6b6b55;
+    }
+
+    /* Horeca */
+    .task.horeca {
+        border-left: 6px solid #ffa94d;
+        background: #fff3e6;
+    }
+    .task.horeca .task-label {
+        background: #ffa94d22;
+        color: #a65e00;
+        border: 1px solid #ffa94d55;
+    }
+
+    /* Techniek */
+    .task.techniek {
+        border-left: 6px solid #4dabf7;
+        background: #e7f3ff;
+    }
+    .task.techniek .task-label {
+        background: #4dabf722;
+        color: #0b4f91;
+        border: 1px solid #4dabf755;
+    }
+
+    /* Groen */
+    .task.Groen {
+        border-left: 6px solid #51cf66;
+        background: #e9ffe9;
+    }
+    .task.Groen .task-label {
+        background: #51cf6622;
+        color: #1b7d2d;
+        border: 1px solid #51cf6655;
+    }
+
+    /* Inkoop */
+    .task.Inkoop {
+        border-left: 6px solid #845ef7;
+        background: #f3e9ff;
+    }
+    .task.Inkoop .task-label {
+        background: #845ef722;
+        color: #3d1fa3;
+        border: 1px solid #845ef755;
+    }
+
+    /* Klantenservice */
+    .task.Klantenservice {
+        border-left: 6px solid #f06595;
+        background: #ffe6f0;
+    }
+    .task.Klantenservice .task-label {
+        background: #f0659522;
+        color: #a30047;
+        border: 1px solid #f0659555;
+    }
+
     /* Drag & drop animaties */
     .sortable-chosen {
       transform: rotate(2deg) scale(1.05);
@@ -55,37 +132,6 @@ require_once '../backend/conn.php';
 
     .sortable-drag {
       background: #d0ebff !important;
-    }
-
-    /* Kleuren per afdeling */
-    .task.personeel {
-        border-left: 6px solid #ff6b6b;
-        background: #ffecec;
-    }
-
-    .task.horeca {
-        border-left: 6px solid #ffa94d;
-        background: #fff3e6;
-    }
-
-    .task.techniek {
-        border-left: 6px solid #4dabf7;
-        background: #e7f3ff;
-    }
-
-    .task.Groen {
-        border-left: 6px solid #51cf66;
-        background: #e9ffe9;
-    }
-
-    .task.Inkoop {
-        border-left: 6px solid #845ef7;
-        background: #f3e9ff;
-    }
-
-    .task.Klantenservice {
-        border-left: 6px solid #f06595;
-        background: #ffe6f0;
     }
   </style>
 </head>
@@ -116,9 +162,9 @@ require_once '../backend/conn.php';
 
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
 
-                echo htmlspecialchars($row['titel']);
+                echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
+                echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
 
-                // BEWERK knop
                 echo "
                 <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
@@ -126,7 +172,6 @@ require_once '../backend/conn.php';
                 </form>
                 ";
 
-                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -157,9 +202,9 @@ require_once '../backend/conn.php';
 
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
 
-                echo htmlspecialchars($row['titel']);
+                echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
+                echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
 
-                // BEWERK knop
                 echo "
                 <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
@@ -167,7 +212,6 @@ require_once '../backend/conn.php';
                 </form>
                 ";
 
-                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -198,10 +242,9 @@ require_once '../backend/conn.php';
 
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
 
-                echo htmlspecialchars($row['titel']);
-                echo " - " . htmlspecialchars($row['afdeling']);
+                echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
+                echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
 
-                // BEWERK knop
                 echo "
                 <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
@@ -209,7 +252,6 @@ require_once '../backend/conn.php';
                 </form>
                 ";
 
-                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -271,6 +313,7 @@ function closePopup() {
 }
 </script>
 
+<!-- SORTABLEJS -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
 <script>
