@@ -34,11 +34,58 @@ require_once '../backend/conn.php';
       gap: 10px;
     }
 
+    /* Basis taak */
     .task {
       background: white;
       padding: 10px;
       border-radius: 8px;
       color: black;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    /* Drag & drop animaties */
+    .sortable-chosen {
+      transform: rotate(2deg) scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .sortable-ghost {
+      opacity: 0.4;
+    }
+
+    .sortable-drag {
+      background: #d0ebff !important;
+    }
+
+    /* Kleuren per afdeling */
+    .task.personeel {
+        border-left: 6px solid #ff6b6b;
+        background: #ffecec;
+    }
+
+    .task.horeca {
+        border-left: 6px solid #ffa94d;
+        background: #fff3e6;
+    }
+
+    .task.techniek {
+        border-left: 6px solid #4dabf7;
+        background: #e7f3ff;
+    }
+
+    .task.Groen {
+        border-left: 6px solid #51cf66;
+        background: #e9ffe9;
+    }
+
+    .task.Inkoop {
+        border-left: 6px solid #845ef7;
+        background: #f3e9ff;
+    }
+
+    .task.Klantenservice {
+        border-left: 6px solid #f06595;
+        background: #ffe6f0;
     }
   </style>
 </head>
@@ -67,10 +114,19 @@ require_once '../backend/conn.php';
             $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                echo "<div class='task' data-id='" . $row['id'] . "'>";
+                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
 
                 echo htmlspecialchars($row['titel']);
 
+                // BEWERK knop
+                echo "
+                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit'>✏️</button>
+                </form>
+                ";
+
+                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -99,10 +155,19 @@ require_once '../backend/conn.php';
             $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                echo "<div class='task' data-id='" . $row['id'] . "'>";
+                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
 
                 echo htmlspecialchars($row['titel']);
 
+                // BEWERK knop
+                echo "
+                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit'>✏️</button>
+                </form>
+                ";
+
+                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -131,11 +196,20 @@ require_once '../backend/conn.php';
             $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                echo "<div class='task' data-id='" . $row['id'] . "'>";
+                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
 
                 echo htmlspecialchars($row['titel']);
                 echo " - " . htmlspecialchars($row['afdeling']);
 
+                // BEWERK knop
+                echo "
+                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit'>✏️</button>
+                </form>
+                ";
+
+                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -206,6 +280,9 @@ function closePopup() {
     new Sortable(document.getElementById(col), {
       group: "shared",
       animation: 150,
+      ghostClass: "sortable-ghost",
+      chosenClass: "sortable-chosen",
+      dragClass: "sortable-drag",
       onEnd: function (evt) {
         const taskId = evt.item.dataset.id;
         const newStatus = evt.to.id;
