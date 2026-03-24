@@ -69,8 +69,15 @@ require_once '../backend/conn.php';
 
                 echo "<div class='task'>";
 
-                // Titel van de taak
                 echo htmlspecialchars($row['titel']);
+
+                // BEWERK knop
+                echo "
+                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit'>✏️</button>
+                </form>
+                ";
 
                 // Verwijderknop
                 echo "
@@ -88,6 +95,7 @@ require_once '../backend/conn.php';
           ?>
         </div>
       </div>
+
       <!-- DOING -->
       <div class="column">
         <div class="column-title">
@@ -102,8 +110,15 @@ require_once '../backend/conn.php';
 
                 echo "<div class='task'>";
 
-                // Titel van de taak
                 echo htmlspecialchars($row['titel']);
+
+                // BEWERK knop
+                echo "
+                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit'>✏️</button>
+                </form>
+                ";
 
                 // Verwijderknop
                 echo "
@@ -136,9 +151,16 @@ require_once '../backend/conn.php';
 
                 echo "<div class='task'>";
 
-                // Titel van de taak
                 echo htmlspecialchars($row['titel']);
                 echo htmlspecialchars($row['afdeling']);
+
+                // BEWERK knop
+                echo "
+                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit'>✏️</button>
+                </form>
+                ";
 
                 // Verwijderknop
                 echo "
@@ -178,8 +200,6 @@ require_once '../backend/conn.php';
         <option value="Inkoop ">Inkoop</option>
         <option value="Klantenservice">Klantenservice</option>
       </select>
-
-
 
       <select name="status">
         <option value="todo">To Do</option>
