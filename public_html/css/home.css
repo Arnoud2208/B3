@@ -130,3 +130,34 @@ textarea:focus,
 select:focus {
     border-color: #4da3ff;
 }
+
+/* Kleuren per afdeling */
+.task.personeel {
+    border-left: 6px solid #ff6b6b;
+    background: #ffecec;
+}
+
+.task.horeca {
+    border-left: 6px solid #ffa94d;
+    background: #fff3e6;
+}
+
+.task.techniek {
+    border-left: 6px solid #4dabf7;
+    background: #e7f3ff;
+}
+
+.task.Groen {
+    border-left: 6px solid #51cf66;
+    background: #e9ffe9;
+}
+
+.task.Inkoop {
+    border-left: 6px solid #845ef7;
+    background: #f3e9ff;
+}
+
+.task.Klantenservice {
+    border-left: 6px solid #f06595;
+    background: #ffe6f0;
+}
