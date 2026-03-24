@@ -62,17 +62,15 @@ require_once '../backend/conn.php';
           <button onclick="openPopup()">+</button>
         </div>
 
-        <div class="tasks">
+        <div class="tasks" id="todo">
           <?php
             $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                echo "<div class='task'>";
+                echo "<div class='task' data-id='" . $row['id'] . "'>";
 
-                // Titel van de taak
                 echo htmlspecialchars($row['titel']);
 
-                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -88,6 +86,7 @@ require_once '../backend/conn.php';
           ?>
         </div>
       </div>
+
       <!-- DOING -->
       <div class="column">
         <div class="column-title">
@@ -95,17 +94,15 @@ require_once '../backend/conn.php';
           <button onclick="openPopup()">+</button>
         </div>
 
-        <div class="tasks">
+        <div class="tasks" id="doing">
           <?php
             $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                echo "<div class='task'>";
+                echo "<div class='task' data-id='" . $row['id'] . "'>";
 
-                // Titel van de taak
                 echo htmlspecialchars($row['titel']);
 
-                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -129,18 +126,16 @@ require_once '../backend/conn.php';
           <button onclick="openPopup()">+</button>
         </div>
 
-        <div class="tasks">
+        <div class="tasks" id="done">
           <?php
             $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                echo "<div class='task'>";
+                echo "<div class='task' data-id='" . $row['id'] . "'>";
 
-                // Titel van de taak
                 echo htmlspecialchars($row['titel']);
-                echo htmlspecialchars($row['afdeling']);
+                echo " - " . htmlspecialchars($row['afdeling']);
 
-                // Verwijderknop
                 echo "
                     <form method='POST' action='../backend/delete_task.php' 
                           style='display:inline; margin-left:10px;'>
@@ -170,16 +165,15 @@ require_once '../backend/conn.php';
       <input type="text" name="titel" placeholder="Titel" required><br><br>
 
       <textarea name="beschrijving" placeholder="Beschrijving"></textarea><br><br>
+
       <select name="afdeling">
         <option value="personeel">Personeel</option>
         <option value="horeca">Horeca</option>
         <option value="techniek">Techniek</option>
         <option value="Groen">Groen</option>
-        <option value="Inkoop ">Inkoop</option>
+        <option value="Inkoop">Inkoop</option>
         <option value="Klantenservice">Klantenservice</option>
       </select>
-
-
 
       <select name="status">
         <option value="todo">To Do</option>
@@ -201,6 +195,29 @@ function openPopup() {
 function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+<script>
+  const columns = ["todo", "doing", "done"];
+
+  columns.forEach(col => {
+    new Sortable(document.getElementById(col), {
+      group: "shared",
+      animation: 150,
+      onEnd: function (evt) {
+        const taskId = evt.item.dataset.id;
+        const newStatus = evt.to.id;
+
+        fetch("../backend/update_status.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `id=${taskId}&status=${newStatus}`
+        });
+      }
+    });
+  });
 </script>
 
 </body>
