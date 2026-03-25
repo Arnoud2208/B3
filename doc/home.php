@@ -51,6 +51,33 @@ require_once '../backend/conn.php';
       border-radius: 20px;
       text-transform: capitalize;
     }
+    .task-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .task-actions button {
+      padding: 4px 8px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-edit {
+      background: #4da3ff;
+      color: white;
+    }
+    .btn-edit:hover {
+      background: #1e7fe6;
+    }
+    .btn-delete {
+      background: #ff6b6b;
+      color: white;
+    }
+    .btn-delete:hover {
+      background: #e03131;
+    }
  
     .task.personeel { border-left: 6px solid #ff6b6b; background: #ffecec; }
     .task.personeel .task-label { background: #ff6b6b22; color: #b30000; border: 1px solid #ff6b6b55; }
@@ -178,29 +205,24 @@ require_once '../backend/conn.php';
           <?php
             $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
- 
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
- 
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
                 echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
- 
+                echo "<div class='task-actions'>";
                 echo "
-                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                <form method='GET' action='edit_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit'>✏️</button>
-                </form>
-                ";
- 
+                    <button type='submit' class='btn-edit'>✏️</button>
+                </form>";
                 echo "
-                    <form method='POST' action='../backend/delete_task.php'
-                          style='display:inline; margin-left:10px;'>
-                        <input type='hidden' name='id' value='" . $row['id'] . "'>
-                        <button type='submit' onclick=\"return confirm('Taak verwijderen?');\">
-                            Verwijderen
-                        </button>
-                    </form>
-                ";
-                echo "<br><small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
+                <form method='POST' action='../backend/delete_task.php'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?');\">
+                        🗑️
+                    </button>
+                </form>";
+                echo "</div>";
+                echo "<small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
               echo "</div>";
             }
           ?>
@@ -218,31 +240,24 @@ require_once '../backend/conn.php';
           <?php
             $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
- 
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
- 
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
                 echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
- 
+                echo "<div class='task-actions'>";
                 echo "
-                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                <form method='GET' action='edit_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit'>✏️</button>
-                </form>
-                ";
- 
+                    <button type='submit' class='btn-edit'>✏️</button>
+                </form>";
                 echo "
-                    <form method='POST' action='../backend/delete_task.php'
-                          style='display:inline; margin-left:10px;'>
-                        <input type='hidden' name='id' value='" . $row['id'] . "'>
-                        <button type='submit' onclick=\"return confirm('Taak verwijderen?');\">
-                            Verwijderen
-                        </button>
-                    </form>
-                ";
-                echo "<br><small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
+                <form method='POST' action='../backend/delete_task.php'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?');\">
+                        🗑️
+                    </button>
+                </form>";
                 echo "</div>";
- 
+                echo "<small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
                 echo "</div>";
             }
           ?>
@@ -260,31 +275,24 @@ require_once '../backend/conn.php';
           <?php
             $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
- 
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
- 
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
                 echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
- 
+                echo "<div class='task-actions'>";
                 echo "
-                <form method='GET' action='edit_task.php' style='display:inline; margin-left:10px;'>
+                <form method='GET' action='edit_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit'>✏️</button>
-                </form>
-                ";
- 
+                    <button type='submit' class='btn-edit'>✏️</button>
+                </form>";
                 echo "
-                    <form method='POST' action='../backend/delete_task.php'
-                          style='display:inline; margin-left:10px;'>
-                        <input type='hidden' name='id' value='" . $row['id'] . "'>
-                        <button type='submit' onclick=\"return confirm('Taak verwijderen?');\">
-                            Verwijderen
-                        </button>
-                    </form>
-                ";
-                echo "<br><small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
+                <form method='POST' action='../backend/delete_task.php'>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?');\">
+                        🗑️
+                    </button>
+                </form>";
                 echo "</div>";
- 
+                echo "<small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
                 echo "</div>";
             }
           ?>
@@ -397,4 +405,3 @@ filter.addEventListener("click", () => {
  
 </body>
 </html>
- 
