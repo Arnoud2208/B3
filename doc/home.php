@@ -34,7 +34,6 @@ require_once '../backend/conn.php';
       gap: 10px;
     }
 
-    /* Basis taak */
     .task {
       background: white;
       padding: 10px;
@@ -43,7 +42,6 @@ require_once '../backend/conn.php';
       transition: transform 0.15s ease, background 0.2s ease;
     }
 
-    /* Mooie badges */
     .task-label {
       display: inline-block;
       margin-top: 6px;
@@ -54,85 +52,93 @@ require_once '../backend/conn.php';
       text-transform: capitalize;
     }
 
-    /* Personeel */
-    .task.personeel {
-        border-left: 6px solid #ff6b6b;
-        background: #ffecec;
-    }
-    .task.personeel .task-label {
-        background: #ff6b6b22;
-        color: #b30000;
-        border: 1px solid #ff6b6b55;
-    }
+    .task.personeel { border-left: 6px solid #ff6b6b; background: #ffecec; }
+    .task.personeel .task-label { background: #ff6b6b22; color: #b30000; border: 1px solid #ff6b6b55; }
 
-    /* Horeca */
-    .task.horeca {
-        border-left: 6px solid #ffa94d;
-        background: #fff3e6;
-    }
-    .task.horeca .task-label {
-        background: #ffa94d22;
-        color: #a65e00;
-        border: 1px solid #ffa94d55;
-    }
+    .task.horeca { border-left: 6px solid #ffa94d; background: #fff3e6; }
+    .task.horeca .task-label { background: #ffa94d22; color: #a65e00; border: 1px solid #ffa94d55; }
 
-    /* Techniek */
-    .task.techniek {
-        border-left: 6px solid #4dabf7;
-        background: #e7f3ff;
-    }
-    .task.techniek .task-label {
-        background: #4dabf722;
-        color: #0b4f91;
-        border: 1px solid #4dabf755;
-    }
+    .task.techniek { border-left: 6px solid #4dabf7; background: #e7f3ff; }
+    .task.techniek .task-label { background: #4dabf722; color: #0b4f91; border: 1px solid #4dabf755; }
 
-    /* Groen */
-    .task.Groen {
-        border-left: 6px solid #51cf66;
-        background: #e9ffe9;
-    }
-    .task.Groen .task-label {
-        background: #51cf6622;
-        color: #1b7d2d;
-        border: 1px solid #51cf6655;
-    }
+    .task.Groen { border-left: 6px solid #51cf66; background: #e9ffe9; }
+    .task.Groen .task-label { background: #51cf6622; color: #1b7d2d; border: 1px solid #51cf6655; }
 
-    /* Inkoop */
-    .task.Inkoop {
-        border-left: 6px solid #845ef7;
-        background: #f3e9ff;
-    }
-    .task.Inkoop .task-label {
-        background: #845ef722;
-        color: #3d1fa3;
-        border: 1px solid #845ef755;
-    }
+    .task.Inkoop { border-left: 6px solid #845ef7; background: #f3e9ff; }
+    .task.Inkoop .task-label { background: #845ef722; color: #3d1fa3; border: 1px solid #845ef755; }
 
-    /* Klantenservice */
-    .task.Klantenservice {
-        border-left: 6px solid #f06595;
-        background: #ffe6f0;
-    }
-    .task.Klantenservice .task-label {
-        background: #f0659522;
-        color: #a30047;
-        border: 1px solid #f0659555;
-    }
+    .task.Klantenservice { border-left: 6px solid #f06595; background: #ffe6f0; }
+    .task.Klantenservice .task-label { background: #f0659522; color: #a30047; border: 1px solid #f0659555; }
 
-    /* Drag & drop animaties */
-    .sortable-chosen {
-      transform: rotate(2deg) scale(1.05);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
+    .sortable-chosen { transform: rotate(2deg) scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .sortable-ghost { opacity: 0.4; }
+    .sortable-drag { background: #d0ebff !important; }
 
-    .sortable-ghost {
-      opacity: 0.4;
-    }
+    /* Container van de filter */
+      .filter-box {
+          width: 260px;
+          margin: 20px auto;
+          text-align: center;
+      }
 
-    .sortable-drag {
-      background: #d0ebff !important;
-    }
+      #filter {
+        width: 220px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+        background: white;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        cursor: pointer;
+
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
+
+        appearance: none; /* verwijdert standaard styling */
+}
+
+      /* Hover effect */
+      #filter:hover {
+          border-color: #4dabf7;
+          box-shadow: 0 4px 10px rgba(77, 171, 247, 0.2);
+      }
+
+      /* Focus (wanneer je klikt) */
+      #filter:focus {
+          outline: none;
+          border-color: #4dabf7;
+          box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+      }
+
+      /* Custom pijltje */
+      .filter-box {
+          position: relative;
+          display: inline-block;
+      }
+
+      .filter-box::after {
+          content: "▼";
+          font-size: 12px;
+          color: #666;
+
+          position: absolute;
+          right: 30px;
+          top: 38px;
+
+          pointer-events: none;
+      }
+
+      /* Keyframes */
+      @keyframes expandDropdown {
+          from { max-height: 38px; opacity: 0.7; }
+          to { max-height: 200px; opacity: 1; }
+      }
+
+      @keyframes collapseDropdown {
+          from { max-height: 200px; opacity: 1; }
+          to { max-height: 38px; opacity: 0.7; }
+      }
   </style>
 </head>
 
@@ -142,6 +148,19 @@ require_once '../backend/conn.php';
   <div class="logo">
       <img src="../img/logo.png" alt="logo">
   </div>
+
+  <div class="filter-box">
+    <label for="filter"><strong>Filter op afdeling</strong></label><br>
+    <select id="filter" onchange="filterTasks()">
+        <option value="all">Alle afdelingen</option>
+        <option value="personeel">Personeel</option>
+        <option value="horeca">Horeca</option>
+        <option value="techniek">Techniek</option>
+        <option value="Groen">Groen</option>
+        <option value="Inkoop">Inkoop</option>
+        <option value="Klantenservice">Klantenservice</option>
+    </select>
+</div>
 </header>
 
 <main>
@@ -338,6 +357,37 @@ function closePopup() {
       }
     });
   });
+
+  function filterTasks() {
+      const filter = document.getElementById("filter").value;
+      const tasks = document.querySelectorAll(".task");
+
+      tasks.forEach(task => {
+          if (filter === "all") {
+              task.style.display = "block";
+          } else {
+              if (task.classList.contains(filter)) {
+                  task.style.display = "block";
+              } else {
+                  task.style.display = "none";
+              }
+          }
+      });
+  }
+</script>
+
+<script>
+const filter = document.getElementById("filter");
+
+filter.addEventListener("click", () => {
+    if (!filter.classList.contains("open")) {
+        filter.classList.remove("close");
+        filter.classList.add("open");
+    } else {
+        filter.classList.remove("open");
+        filter.classList.add("close");
+    }
+});
 </script>
 
 </body>
