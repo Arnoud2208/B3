@@ -6,8 +6,7 @@ $titel = $_POST['titel'];
 $beschrijving = $_POST['beschrijving'];
 $afdeling = $_POST['afdeling'];
 $status = $_POST['status'];
-$deadline = $_POST['deadline'];
-
+$deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
 $stmt = $conn->prepare("
     UPDATE taken 
     SET titel = ?, beschrijving = ?, afdeling = ?, status = ?,deadline = ?
