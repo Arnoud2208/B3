@@ -8,6 +8,18 @@ body {
     font-family: Arial, sans-serif;
 }
 
+main {
+    margin-top: 20px;
+}
+
+.wrapper {
+    margin-top: 0;
+}
+
+.container.columns {
+    margin-top: 20px;
+}
+
 /* Wrapper */
 .wrapper {
     width: 70%;
