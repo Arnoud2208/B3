@@ -118,6 +118,8 @@ $taak = $stmt->fetch(PDO::FETCH_ASSOC);
             <option value="doing" <?= $taak['status']=='doing'?'selected':'' ?>>Doing</option>
             <option value="done" <?= $taak['status']=='done'?'selected':'' ?>>Done</option>
         </select>
+        <input type="date" name="deadline"
+        value="<? $taak['deadline'] ?>"><br><br>
 
         <button type="submit">Opslaan</button>
     </form>

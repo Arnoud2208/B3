@@ -181,8 +181,8 @@ require_once '../backend/conn.php';
                         </button>
                     </form>
                 ";
-
-                echo "</div>";
+                echo "<br><small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
+              echo "</div>";
             }
           ?>
         </div>
@@ -221,6 +221,8 @@ require_once '../backend/conn.php';
                         </button>
                     </form>
                 ";
+                echo "<br><small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
+                echo "</div>";
 
                 echo "</div>";
             }
@@ -261,6 +263,8 @@ require_once '../backend/conn.php';
                         </button>
                     </form>
                 ";
+                echo "<br><small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
+                echo "</div>";
 
                 echo "</div>";
             }
@@ -296,6 +300,7 @@ require_once '../backend/conn.php';
         <option value="doing">Doing</option>
         <option value="done">Done</option>
       </select><br><br>
+      <input  type="date" name ="deadline"><br><br>
 
       <button type="submit">Opslaan</button>
       <button type="button" onclick="closePopup()">Sluiten</button>
