@@ -18,115 +18,28 @@ require_once '../backend/conn.php';
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.5);
-      z-index: 1000;
     }
  
     .popup-content {
       background: white;
       padding: 20px;
-      width: 400px;
-      max-width: 90vw;
-      margin: 50px auto;
-      border-radius: 12px;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      width: 300px;
+      margin: 100px auto;
+      border-radius: 10px;
     }
-
-    .task-details-header {
+ 
+    .tasks {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 3px solid #4dabf7;
+      flex-direction: column;
+      gap: 10px;
     }
-
-    .task-details-title {
-      margin: 0;
-      color: #333;
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .close-popup {
-      background: #ff6b6b;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    .close-popup:hover {
-      background: #e03131;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .detail-row:last-child {
-      border-bottom: none;
-    }
-
-    .detail-label {
-      font-weight: 600;
-      color: #555;
-      min-width: 120px;
-    }
-
-    .detail-value {
-      color: #333;
-      font-weight: 500;
-    }
-
-    .detail-description {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 8px;
-      border-left: 4px solid #4dabf7;
-      margin: 15px 0;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .no-description {
-      color: #999;
-      font-style: italic;
-      text-align: center;
-      padding: 20px;
-      background: #f8f9fa;
-      border-radius: 8px;
-      border-left: 4px solid #ccc;
-    }
-
+ 
     .task {
       background: white;
       padding: 10px;
       border-radius: 8px;
       color: black;
-      transition: all 0.2s ease;
-      position: relative;
-      cursor: pointer; /* Wijst aan dat het klikbaar is */
-    }
-
-    .task:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    /* Rest van je bestaande styles blijven hetzelfde */
-    .tasks {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      transition: transform 0.15s ease, background 0.2s ease;
     }
  
     .task-label {
@@ -138,14 +51,11 @@ require_once '../backend/conn.php';
       border-radius: 20px;
       text-transform: capitalize;
     }
-    
     .task-actions {
       display: flex;
       gap: 6px;
       margin-top: 8px;
-      align-items: center;
     }
-    
     .task-actions button {
       padding: 4px 8px;
       font-size: 14px;
@@ -154,26 +64,21 @@ require_once '../backend/conn.php';
       cursor: pointer;
       transition: 0.2s;
     }
-    
     .btn-edit {
       background: #4da3ff;
       color: white;
     }
-    
     .btn-edit:hover {
       background: #1e7fe6;
     }
-    
     .btn-delete {
       background: #ff6b6b;
       color: white;
     }
-    
     .btn-delete:hover {
       background: #e03131;
     }
-
-    /* Kleuren per afdeling */
+ 
     .task.personeel { border-left: 6px solid #ff6b6b; background: #ffecec; }
     .task.personeel .task-label { background: #ff6b6b22; color: #b30000; border: 1px solid #ff6b6b55; }
  
@@ -191,64 +96,101 @@ require_once '../backend/conn.php';
  
     .task.Klantenservice { border-left: 6px solid #f06595; background: #ffe6f0; }
     .task.Klantenservice .task-label { background: #f0659522; color: #a30047; border: 1px solid #f0659555; }
-
-    /* Filter styles */
-    .filter-box {
-        width: 260px;
-        margin: 20px auto;
-        text-align: center;
-    }
  
-    #filter {
-      width: 220px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid #dee2e6;
-      background: white;
-      font-size: 14px;
-      font-weight: 500;
-      color: #333;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: all 0.2s ease;
-      appearance: none;
-    }
+    .sortable-chosen { transform: rotate(2deg) scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .sortable-ghost { opacity: 0.4; }
+    .sortable-drag { background: #d0ebff !important; }
+ 
+    /* Container van de filter */
+      .filter-box {
+          width: 260px;
+          margin: 20px auto;
+          text-align: center;
+      }
+ 
+      #filter {
+        width: 220px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+        background: white;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        cursor: pointer;
+ 
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
+ 
+        appearance: none; /* verwijdert standaard styling */
+}
+ 
+      /* Hover effect */
+      #filter:hover {
+          border-color: #4dabf7;
+          box-shadow: 0 4px 10px rgba(77, 171, 247, 0.2);
+      }
+ 
+      /* Focus (wanneer je klikt) */
+      #filter:focus {
+          outline: none;
+          border-color: #4dabf7;
+          box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+      }
+ 
+      /* Custom pijltje */
+      .filter-box {
+          position: relative;
+          display: inline-block;
+      }
+ 
+      .filter-box::after {
+          content: "▼";
+          font-size: 12px;
+          color: #666;
+ 
+          position: absolute;
+          right: 30px;
+          top: 38px;
+ 
+          pointer-events: none;
+      }
+ 
+      /* Keyframes */
+      @keyframes expandDropdown {
+          from { max-height: 38px; opacity: 0.7; }
+          to { max-height: 200px; opacity: 1; }
+      }
+ 
+      @keyframes collapseDropdown {
+          from { max-height: 200px; opacity: 1; }
+          to { max-height: 38px; opacity: 0.7; }
+      }
+
+      /* Navigatie link */
+      .nav-overzicht {
+          margin-right: 40px;
+      }
+
+      .nav-overzicht a {
+          text-decoration: none;
+          color: white;
+          background: #4dabf7;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          transition: background 0.2s ease;
+      }
+
+      .nav-overzicht a:hover {
+          background: #1e7fe6;
+      }
   </style>
 </head>
  
 <body>
-
-<!-- Taak details popup -->
-<div id="taskDetailsPopup" class="popup">
-  <div class="popup-content">
-    <div class="task-details-header">
-      <h2 class="task-details-title" id="popupTitle">Taak details</h2>
-      <button class="close-popup" onclick="closeTaskPopup()">✕</button>
-    </div>
-    
-    <div class="detail-row">
-      <span class="detail-label">Afdeling:</span>
-      <span class="detail-value" id="popupAfdeling">-</span>
-    </div>
-    
-    <div class="detail-row">
-      <span class="detail-label">Status:</span>
-      <span class="detail-value" id="popupStatus">-</span>
-    </div>
-    
-    <div class="detail-row">
-      <span class="detail-label">Deadline:</span>
-      <span class="detail-value" id="popupDeadline">-</span>
-    </div>
-    
-    <div class="detail-row">
-      <span class="detail-label">Beschrijving:</span>
-      <span class="detail-value">-</span>
-    </div>
-    <div id="popupDescription" class="detail-description">Laadt...</div>
-  </div>
-</div>
-
+ 
 <header>
   <div class="logo">
       <img src="../img/logo.png" alt="logo">
@@ -266,6 +208,10 @@ require_once '../backend/conn.php';
         <option value="Klantenservice">Klantenservice</option>
     </select>
   </div>
+
+  <div class="nav-overzicht">
+    <a href="overzicht.php">Overzicht taken</a>
+  </div>
 </header>
  
 <main>
@@ -276,33 +222,28 @@ require_once '../backend/conn.php';
       <div class="column">
         <div class="column-title">
           <h3>To Do</h3>
-          <button onclick="openAddPopup()">+</button>
+          <button onclick="openPopup()">+</button>
         </div>
  
         <div class="tasks" id="todo">
           <?php
-            $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
+                        $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' ";
-                echo "data-id='" . $row['id'] . "' ";
-                echo "data-title='" . htmlspecialchars($row['titel']) . "' ";
-                echo "data-afdeling='" . htmlspecialchars($row['afdeling']) . "' ";
-                echo "data-status='todo' ";
-                echo "data-deadline='" . htmlspecialchars($row['deadline'] ?? '') . "' ";
-                echo "data-description='" . htmlspecialchars($row['beschrijving'] ?? '') . "' ";
-                echo "onclick='showTaskDetails(this)' style='cursor:pointer;'>";
+                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
                 echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
                 echo "<div class='task-actions'>";
                 echo "
-                <form method='GET' action='edit_task.php' style='display: inline;'>
+                <form method='GET' action='edit_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit' class='btn-edit' title='Bewerken'>✏️</button>
+                    <button type='submit' class='btn-edit'>✏️</button>
                 </form>";
                 echo "
-                <form method='POST' action='../backend/delete_task.php' style='display: inline;'>
+                <form method='POST' action='../backend/delete_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?'); event.stopPropagation();\" title='Verwijderen'>🗑️</button>
+                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?');\">
+                        🗑️
+                    </button>
                 </form>";
                 echo "</div>";
                 echo "<small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
@@ -316,33 +257,28 @@ require_once '../backend/conn.php';
       <div class="column">
         <div class="column-title">
           <h3>Doing</h3>
-          <button onclick="openAddPopup()">+</button>
+          <button onclick="openPopup()">+</button>
         </div>
  
         <div class="tasks" id="doing">
           <?php
-            $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
+                        $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' ";
-                echo "data-id='" . $row['id'] . "' ";
-                echo "data-title='" . htmlspecialchars($row['titel']) . "' ";
-                echo "data-afdeling='" . htmlspecialchars($row['afdeling']) . "' ";
-                echo "data-status='doing' ";
-                echo "data-deadline='" . htmlspecialchars($row['deadline'] ?? '') . "' ";
-                echo "data-description='" . htmlspecialchars($row['beschrijving'] ?? '') . "' ";
-                echo "onclick='showTaskDetails(this)' style='cursor:pointer;'>";
+                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
                 echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
                 echo "<div class='task-actions'>";
                 echo "
-                <form method='GET' action='edit_task.php' style='display: inline;'>
+                <form method='GET' action='edit_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit' class='btn-edit' title='Bewerken'>✏️</button>
+                    <button type='submit' class='btn-edit'>✏️</button>
                 </form>";
                 echo "
-                <form method='POST' action='../backend/delete_task.php' style='display: inline;'>
+                <form method='POST' action='../backend/delete_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?'); event.stopPropagation();\" title='Verwijderen'>🗑️</button>
+                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?');\">
+                        🗑️
+                    </button>
                 </form>";
                 echo "</div>";
                 echo "<small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
@@ -356,33 +292,28 @@ require_once '../backend/conn.php';
       <div class="column">
         <div class="column-title">
           <h3>Done</h3>
-          <button onclick="openAddPopup()">+</button>
+          <button onclick="openPopup()">+</button>
         </div>
  
         <div class="tasks" id="done">
           <?php
-            $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
+                        $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' ";
-                echo "data-id='" . $row['id'] . "' ";
-                echo "data-title='" . htmlspecialchars($row['titel']) . "' ";
-                echo "data-afdeling='" . htmlspecialchars($row['afdeling']) . "' ";
-                echo "data-status='done' ";
-                echo "data-deadline='" . htmlspecialchars($row['deadline'] ?? '') . "' ";
-                echo "data-description='" . htmlspecialchars($row['beschrijving'] ?? '') . "' ";
-                echo "onclick='showTaskDetails(this)' style='cursor:pointer;'>";
+                echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
                 echo "<div class='task-label'>" . htmlspecialchars($row['afdeling']) . "</div>";
                 echo "<div class='task-actions'>";
                 echo "
-                <form method='GET' action='edit_task.php' style='display: inline;'>
+                <form method='GET' action='edit_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit' class='btn-edit' title='Bewerken'>✏️</button>
+                    <button type='submit' class='btn-edit'>✏️</button>
                 </form>";
                 echo "
-                <form method='POST' action='../backend/delete_task.php' style='display: inline;'>
+                <form method='POST' action='../backend/delete_task.php'>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?'); event.stopPropagation();\" title='Verwijderen'>🗑️</button>
+                    <button type='submit' class='btn-delete' onclick=\"return confirm('Taak verwijderen?');\">
+                        🗑️
+                    </button>
                 </form>";
                 echo "</div>";
                 echo "<small>Deadline: " . htmlspecialchars($row['deadline'] ?? '') . "</small>";
@@ -391,71 +322,110 @@ require_once '../backend/conn.php';
           ?>
         </div>
       </div>
+ 
     </div>
   </div>
 </main>
-
+ 
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <h2>Nieuwe taak</h2>
+ 
+    <form method="POST" action="../backend/add_task.php">
+      <input type="text" name="titel" placeholder="Titel" required><br><br>
+ 
+      <textarea name="beschrijving" placeholder="Beschrijving"></textarea><br><br>
+ 
+      <select name="afdeling">
+        <option value="personeel">Personeel</option>
+        <option value="horeca">Horeca</option>
+        <option value="techniek">Techniek</option>
+        <option value="Groen">Groen</option>
+        <option value="Inkoop">Inkoop</option>
+        <option value="Klantenservice">Klantenservice</option>
+      </select>
+ 
+      <select name="status">
+        <option value="todo">To Do</option>
+        <option value="doing">Doing</option>
+        <option value="done">Done</option>
+      </select><br><br>
+      <input  type="date" name ="deadline"><br><br>
+ 
+      <button type="submit">Opslaan</button>
+      <button type="button" onclick="closePopup()">Sluiten</button>
+    </form>
+  </div>
+</div>
+ 
 <script>
-function showTaskDetails(taskElement) {
-    // Haal alle data uit de task
-    const title = taskElement.dataset.title;
-    const afdeling = taskElement.dataset.afdeling;
-    const status = taskElement.dataset.status;
-    const deadline = taskElement.dataset.deadline || 'Geen deadline';
-    const description = taskElement.dataset.description || '';
-    
-    // Vul popup velden
-    document.getElementById('popupTitle').textContent = title;
-    document.getElementById('popupAfdeling').textContent = afdeling;
-    document.getElementById('popupStatus').textContent = status.charAt(0).toUpperCase() + status.slice(1);
-    document.getElementById('popupDeadline').textContent = deadline;
-    
-    const descElement = document.getElementById('popupDescription');
-    if (description.trim()) {
-        descElement.textContent = description;
-        descElement.className = 'detail-description';
-    } else {
-        descElement.textContent = 'Geen beschrijving beschikbaar.';
-        descElement.className = 'detail-description no-description';
-    }
-    
-    // Toon popup
-    document.getElementById('taskDetailsPopup').style.display = 'block';
+function openPopup() {
+    document.getElementById("popup").style.display = "block";
 }
-
-function closeTaskPopup() {
-    document.getElementById('taskDetailsPopup').style.display = 'none';
-}
-
-// Sluit popup bij klik op achtergrond
-document.getElementById('taskDetailsPopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeTaskPopup();
-    }
-});
-
-// ESC toets om popup te sluiten
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeTaskPopup();
-    }
-});
-
-// Voorkom dat klikken op knoppen de popup opent
-document.querySelectorAll('.btn-edit, .btn-delete').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-});
-
-function filterTasks() {
-    // Je filter functie hier
-}
-
-function openAddPopup() {
-    // Je add popup functie hier
+ 
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
 }
 </script>
-
+ 
+<!-- SORTABLEJS -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+ 
+<script>
+  const columns = ["todo", "doing", "done"];
+ 
+  columns.forEach(col => {
+    new Sortable(document.getElementById(col), {
+      group: "shared",
+      animation: 150,
+      ghostClass: "sortable-ghost",
+      chosenClass: "sortable-chosen",
+      dragClass: "sortable-drag",
+      onEnd: function (evt) {
+        const taskId = evt.item.dataset.id;
+        const newStatus = evt.to.id;
+ 
+        fetch("../backend/update_status.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `id=${taskId}&status=${newStatus}`
+        });
+      }
+    });
+  });
+ 
+  function filterTasks() {
+      const filter = document.getElementById("filter").value;
+      const tasks = document.querySelectorAll(".task");
+ 
+      tasks.forEach(task => {
+          if (filter === "all") {
+              task.style.display = "block";
+          } else {
+              if (task.classList.contains(filter)) {
+                  task.style.display = "block";
+              } else {
+                  task.style.display = "none";
+              }
+          }
+      });
+  }
+</script>
+ 
+<script>
+const filter = document.getElementById("filter");
+ 
+filter.addEventListener("click", () => {
+    if (!filter.classList.contains("open")) {
+        filter.classList.remove("close");
+        filter.classList.add("open");
+    } else {
+        filter.classList.remove("open");
+        filter.classList.add("close");
+    }
+});
+</script>
+ 
 </body>
 </html>
