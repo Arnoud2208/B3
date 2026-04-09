@@ -166,6 +166,26 @@ require_once '../backend/conn.php';
           from { max-height: 200px; opacity: 1; }
           to { max-height: 38px; opacity: 0.7; }
       }
+
+      /* Navigatie link */
+      .nav-overzicht {
+          margin-right: 40px;
+      }
+
+      .nav-overzicht a {
+          text-decoration: none;
+          color: white;
+          background: #4dabf7;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          transition: background 0.2s ease;
+      }
+
+      .nav-overzicht a:hover {
+          background: #1e7fe6;
+      }
   </style>
 </head>
  
@@ -187,7 +207,11 @@ require_once '../backend/conn.php';
         <option value="Inkoop">Inkoop</option>
         <option value="Klantenservice">Klantenservice</option>
     </select>
-</div>
+  </div>
+
+  <div class="nav-overzicht">
+    <a href="overzicht.php">Overzicht taken</a>
+  </div>
 </header>
  
 <main>
@@ -203,7 +227,7 @@ require_once '../backend/conn.php';
  
         <div class="tasks" id="todo">
           <?php
-            $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
+                        $stmt = $conn->query("SELECT * FROM taken WHERE status='todo'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
@@ -238,7 +262,7 @@ require_once '../backend/conn.php';
  
         <div class="tasks" id="doing">
           <?php
-            $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
+                        $stmt = $conn->query("SELECT * FROM taken WHERE status='doing'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
@@ -273,7 +297,7 @@ require_once '../backend/conn.php';
  
         <div class="tasks" id="done">
           <?php
-            $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
+                        $stmt = $conn->query("SELECT * FROM taken WHERE status='done'");
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='task " . htmlspecialchars($row['afdeling']) . "' data-id='" . $row['id'] . "'>";
                 echo "<strong>" . htmlspecialchars($row['titel']) . "</strong>";
